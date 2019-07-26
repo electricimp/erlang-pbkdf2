@@ -22,7 +22,7 @@
 
 -type digest_func_info() :: md4 | md5 | ripemd160 | sha | sha224 | sha256 | sha384 | sha512.
 
--type mac_func_info() :: {hmac, digest_func_info()} | digest_func_info().
+-type mac_func_info() :: {hmac, digest_func_info()} | digest_func_info() | fun((binary(), binary()) -> binary()).
 
 
 -define(MAX_DERIVED_KEY_LENGTH, (1 bsl 32 - 1)).
@@ -30,7 +30,7 @@
 %======================================================================================================================
 % Public API
 
--spec pbkdf2(MacFunc, Password, Salt, Iterations) -> {ok, Key} | {error, derived_key_too_long} when
+-spec pbkdf2(MacFunc, Password, Salt, Iterations) -> Key when
 	MacFunc :: mac_func_info(),
 	Password :: binary(),
 	Salt :: binary(),

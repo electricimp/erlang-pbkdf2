@@ -3,5 +3,5 @@
 	{vsn, "1.0.0"},
 	{modules, ['pbkdf2']},
 	{registered, []},
-	{applications, [kernel,stdlib]}
+	{applications, [kernel,stdlib,crypto]}
 ]}.
