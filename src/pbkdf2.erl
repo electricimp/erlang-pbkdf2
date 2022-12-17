@@ -15,7 +15,6 @@
 -export([pbkdf2/4, pbkdf2/5, compare_secure/2, to_hex/1]).
 
 
-%-type(hex_char() :: $0 .. $9 | $a .. $f).
 -type(hex_char() :: 48 .. 57 | 97 .. 102).
 -type(hex_list() :: [hex_char()]).
 
@@ -114,10 +113,9 @@ pbkdf2(MacFunc, Password, Salt, Iterations, BlockIndex, Iteration, Prev, Acc) ->
 
 resolve_mac_func({hmac, DigestFunc}) ->
 	fun(Key, Data) ->
-		%crypto:hmac(DigestFunc, Key, Data)
-		HMAC = crypto:hmac_init(DigestFunc, Key),
-		HMAC1 = crypto:hmac_update(HMAC, Data),
-		crypto:hmac_final(HMAC1)
+		HMAC = crypto:mac_init(hmac, DigestFunc, Key),
+		HMAC1 = crypto:mac_update(HMAC, Data),
+		crypto:mac_final(HMAC1)
 	end;
 
 resolve_mac_func(MacFunc) when is_function(MacFunc) ->
